@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Link,Routes, Route, useNavigate, Navigate  } from 'react-router-dom';
+import { Link,Routes, Route, useNavigate, Navigate  } from 'react-router-dom';
 
 import NavigationBar from './NavigationBar'
 
@@ -9,10 +9,12 @@ import AboutPage from "./pages/About";
 import AriticlePage from './pages/ArticlePage';
 import ArticlesListPage from './pages/ArticlesListPage';
 import SaveArticlePage from './pages/SaveArticlePage';
+import HowToUsePage from './pages/HowToUse';
 
 import NotFoundPage from './pages/NotFoundPage';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import AboutForeSightPage from './pages/AboutForeSight';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -55,18 +57,20 @@ function App() {
   }, [navigate]);
 
   const Menus = [
-    { title: "About", src: "Chart_fill", pageName: "About" },
+    { title: "About us", src: "Chart_fill", pageName: "About" },
     { title: "Articles List", src: "Calendar", pageName: "articles" },
     { title: "Save Articles", src: "Calendar", pageName: "save-article" },
+    { title: "How to use", src: "Chart_fill", pageName: "HowToUse" },
+    { title: "About ForeSight", src: "Chart_fill", pageName: "AboutForeSight" },
   ];
 
   return (
     <div>
-          {user ? <div className='flex sticky h-screen'>
+          {user ? <div className='flex h-screen'>
       <div
           className={` ${
-            open ? "w-72" : "w-20 "
-          } bg-dark-purple h-full p-5  pt-8 relative duration-300`}
+            open ? "fixed top-0 left-0 w-72" : "w-20 "
+          } bg-dark-purple h-full p-5 top-0 left-0 pt-8 relative duration-300`}
         >
           <img
             src="./src/assets/control.png"
@@ -89,15 +93,14 @@ function App() {
             {Menus.map((Menu, index) => (
               <li
                 key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+                className={`flex rounded-md px-2 py-4 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
                 ${Menu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-light-white"
                 } `}
               >
-              <Link className={`flex w-full (${ isActive }) =>
-                  ${isActive} ? 'text-blue-700 font-bold' : ''`} to={`/${Menu.pageName}`}>
-                <span className='flex'>
-                    <img src={`./src/assets/${Menu.src}.png`} /> &nbsp;&nbsp;<span className={`${!open && "hidden"} origin-left duration-200`}>{`${Menu.title}`}</span>
+              <Link className="flex className={({ isActive }) =>
+                isActive ? 'text-blue-700 font-bold' : ''" to={`/${Menu.pageName}`}>
+                <span className='flex'><img src={`./src/assets/${Menu.src}.png`} /> &nbsp;&nbsp;<span className={`${!open && "hidden"} origin-left duration-200`}>{`${Menu.title}`}</span>
                 </span>
               </Link>
               </li>
@@ -115,7 +118,8 @@ function App() {
             <Route path="/:articleId" element={<AriticlePage />} />
             <Route path="/articles" element={<ArticlesListPage searchQuery={searchQuery} />} />
             <Route path="/save-article" element={<SaveArticlePage onSave={handleSaveArticle} />} />
-
+            <Route path="/HowToUse" element={<HowToUsePage />} />
+            <Route path="/AboutForeSight" element={<AboutForeSightPage />} />
             <Route
               path="/login"
               element={
@@ -143,8 +147,8 @@ function App() {
       </div>
       </div> : 
       
-      <div className="container h-fit p-0 sticky mx-auto">
-        <section className="container p-0 m-0 mx-auto">
+      <div className="container">
+        {/* <section className="container p-0 m-0 mx-auto"> */}
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/About" element={<AboutPage />} />
@@ -175,7 +179,7 @@ function App() {
 
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        </section>
+        {/* </section> */}
       </div>
       
       }

@@ -1,6 +1,6 @@
 #tags {
     width: 40%;
-    //margin: 0px auto;
+    /* margin: 0px auto; */
 }
   
   #tags .ReactTags__tags {
@@ -47,7 +47,7 @@
   
   #tags .ReactTags__selected span.ReactTags__tag {
     border: 1px solid #ddd;
-    background: #63bcfd;
+    background: #0E2F92;
     color: white;
     font-size: 12px;
     display: flex;

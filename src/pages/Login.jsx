@@ -10,7 +10,7 @@ const Login = ({ onLogin }) => {
     event.preventDefault();
     try {
       // Simulate an API request
-      const response = await fetch('http://localhost:8000/api/login', {
+      const response = await fetch('http://pjha:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

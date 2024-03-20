@@ -1,5 +1,8 @@
 import { Quill } from "react-quill";
+//import { quillBetterTable } from "quill-better-table";
+// import ImageResize from 'quill-image-resize-module-react';
 
+//Quill.register('modules/imageResize', ImageResize);
 // Custom Undo button icon component for Quill editor. You can import it directly
 // from 'quill/assets/icons/undo.svg' but I found that a number of loaders do not
 // handle them correctly
@@ -62,7 +65,21 @@ export const modules = {
     delay: 500,
     maxStack: 100,
     userOnly: true
-  }
+  },
+  // table: false, // disable the default table module
+  // 'quillBetterTable': {
+  //   operationMenu: {
+  //     items: {
+  //       unmergeCells: {
+  //         text: 'Another unmerge cells name'
+  //       }
+  //     }
+  //   }
+  // },
+//   imageResize: {
+//     parchment: Quill.import('parchment'),
+//     modules: ['Resize', 'DisplaySize']
+//  }
 };
 
 // Formats objects for setting up the Quill editor

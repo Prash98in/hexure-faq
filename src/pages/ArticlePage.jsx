@@ -11,7 +11,7 @@ const ArticlePage = () => {
         // Function to fetch article data
         const fetchArticle = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/articles/${articleId}`);
+                const response = await fetch(`http://pjha:8000/api/articles/${articleId}`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -38,7 +38,7 @@ const ArticlePage = () => {
             {Array.isArray(article) && article.length > 0 ? (
                 <>
                     <h1 className="mb-5 text-2xl md:text-2xl text-coolGray-900 font-bold text-left mt-4">{article[0].title}</h1>
-                    <div className="mb-10 text-m md:text-m text-coolGray-900 font-normal text-left mr-10 ql-bubble" >
+                    <div className="mb-10 text-m md:text-m text-coolGray-900 font-normal text-left mr-10 ql-bubble shadow-lg shadow-black-900/40" >
                         {/* <p dangerouslySetInnerHTML={{__html:'<p>'+ article[0].content + '</p>   '}} /> */}
                         <ReactQuill
                         theme="bubble"
