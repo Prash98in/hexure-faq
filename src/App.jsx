@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link,Routes, Route, useNavigate, Navigate  } from 'react-router-dom';
-
+import { NavLink,Routes, Route, useNavigate, Navigate  } from 'react-router-dom';
+// import Fuse from 'fuse.js';
+// import nlp from 'compromise';
 import NavigationBar from './NavigationBar'
 
 //import HomePage from './pages/pages/HomePage';
@@ -9,7 +10,9 @@ import AboutPage from "./pages/About";
 import AriticlePage from './pages/ArticlePage';
 import ArticlesListPage from './pages/ArticlesListPage';
 import SaveArticlePage from './pages/SaveArticlePage';
+import UpdateArticlePage from './pages/UpdateArticlePage';
 import HowToUsePage from './pages/HowToUse';
+import ArticlesUpdateListPage from './pages/ArticlesUpdateListPage';
 
 import NotFoundPage from './pages/NotFoundPage';
 import Register from './pages/Register';
@@ -21,13 +24,17 @@ function App() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(true);
-  const isActive = true;
+
   const [articles, setArticles] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
     localStorage.setItem('user', JSON.stringify(loggedInUser)); // Store user in local storage
+
+    // setTimeout(() => {
+    //   handleLogout();
+    // }, 50000);
   };
 
   const handleLogout = () => {
@@ -40,8 +47,34 @@ function App() {
     setArticles((prevArticles) => [...prevArticles, newArticle]);
   };
 
+
+  // const [results, setResults] = useState([]);
+  // // Initialize Fuse with your items and options
+  //   const fuse = new Fuse(searchQuery, {
+  //     keys: ['title', 'description'], // Adjust based on your item properties
+  //     includeScore: true,
+  //     threshold: 0.3, // Tweak threshold for fuzziness
+  //   });
+
   const handleSearch = (query) => {
     setSearchQuery(query);
+
+    // if (query.length > 2) {
+    //   // Use NLP to process the query for more relevant search keywords
+    //   const processedQuery = nlp(query).topics().out('array');
+
+    //   // If NLP finds relevant topics, use them; otherwise, use the original query
+    //   const effectiveQuery = processedQuery.length > 0 ? processedQuery[0] : query;
+
+    //   // Perform fuzzy search with the processed or original query
+    //   const searchResults = fuse.search(effectiveQuery).map(result => result.item);
+
+    //   setResults(searchResults);
+    // } else {
+    //   setResults([]);
+    // }
+    
+    // console.log(results);
     navigate(`/articles${query ? `?q=${query}` : ''}`);
   };
 
@@ -59,9 +92,12 @@ function App() {
   const Menus = [
     { title: "About us", src: "Chart_fill", pageName: "About" },
     { title: "Articles List", src: "Calendar", pageName: "articles" },
+    { title: "Articles Update", src: "Calendar", pageName: "articlesupdate" },
     { title: "Save Articles", src: "Calendar", pageName: "save-article" },
     { title: "How to use", src: "Chart_fill", pageName: "HowToUse" },
     { title: "About ForeSight", src: "Chart_fill", pageName: "AboutForeSight" },
+    //{ title: "Update Article", src: "Calendar", pageName: "update-article" },
+    
   ];
 
   return (
@@ -79,47 +115,47 @@ function App() {
             onClick={() => setOpen(!open)}
           />
           <div className="gap-x-3 flex flex-nowrap">
-            <Link to='/' className="flex className={({ isActive }) =>
-                isActive ? 'text-blue-700 font-bold' : ''">
+            <NavLink to='/' className={({ isActive }) => (isActive ? 'active-link' : 'link')}>
               <img
                 src="./src/assets/HexureIcon.png"
                 className={`cursor-pointer duration-300 ${
                   open && "rotate-[180deg]"
                 }`}
               />
-            </Link>
+            </NavLink>
           </div>
           <ul className="pt-6">
             {Menus.map((Menu, index) => (
               <li
                 key={index}
-                className={`flex rounded-md px-2 py-4 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+                className={`nav-Link 
                 ${Menu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-light-white"
                 } `}
               >
-              <Link className="flex className={({ isActive }) =>
-                isActive ? 'text-blue-700 font-bold' : ''" to={`/${Menu.pageName}`}>
+              <NavLink to={`/${Menu.pageName}`} className={({ isActive }) => (isActive ? 'active-link' : 'link')}>
                 <span className='flex'><img src={`./src/assets/${Menu.src}.png`} /> &nbsp;&nbsp;<span className={`${!open && "hidden"} origin-left duration-200`}>{`${Menu.title}`}</span>
                 </span>
-              </Link>
+              </NavLink>
               </li>
             ))}
           </ul>
         </div>
       
 
-      <div className="container h-fit p-0 sticky">
+      <div className="container h-fit p-0">
         <NavigationBar user={user} onLogout={handleLogout} onSearch={handleSearch} searchQuery={searchQuery} />
-         <section className="container p-5 m-0 mx-auto">
+         <section className="container p-5 m-0 mx-auto h-[90vh] overflow-auto">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/About" element={<AboutPage />} />
+            <Route path="/About" element={<AboutPage isOpen={open}/>}  />
             <Route path="/:articleId" element={<AriticlePage />} />
             <Route path="/articles" element={<ArticlesListPage searchQuery={searchQuery} />} />
+            <Route path="/articlesupdate" element={<ArticlesUpdateListPage searchQuery={searchQuery} />} />
             <Route path="/save-article" element={<SaveArticlePage onSave={handleSaveArticle} />} />
             <Route path="/HowToUse" element={<HowToUsePage />} />
             <Route path="/AboutForeSight" element={<AboutForeSightPage />} />
+            <Route path="/update-article" element={<UpdateArticlePage onSave={handleSaveArticle} />} />
             <Route
               path="/login"
               element={
@@ -155,7 +191,8 @@ function App() {
             <Route path="/:articleId" element={<AriticlePage />} />
             <Route path="/articles" element={<ArticlesListPage searchQuery={searchQuery} />} />
             <Route path="/save-article" element={<SaveArticlePage onSave={handleSaveArticle} />} />
-
+            <Route path="/articlesupdate" element={<ArticlesUpdateListPage searchQuery={searchQuery} />} />
+            <Route path="/update-article" element={<UpdateArticlePage onSave={handleSaveArticle} />} />
             <Route
               path="/login"
               element={

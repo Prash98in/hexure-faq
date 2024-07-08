@@ -11,6 +11,7 @@ const SaveArticlePage = () => {
   const [articleUrl, setArticleUrl] = useState('');
   const [tags, setTags] =useState([]); //to store tags
 
+      const serverAddress = "http://pjha";
 
   const containerCSS = "grid grid-cols-6 gap-4";
   const labelCSS ="col-span-1 h-10 ";
@@ -39,7 +40,7 @@ const SaveArticlePage = () => {
     }
 !validInput()? alert('All fields are required'):
     // Send a POST request to the Node.js server
-    fetch('http://pjha:8000/api/saveQuestions', {
+    fetch(serverAddress+`:8000/api/saveQuestions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

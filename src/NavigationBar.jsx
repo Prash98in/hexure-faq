@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { NavLink } from 'react-router-dom';
 
 //import { Link } from 'react-router-dom';
 
@@ -77,7 +77,7 @@ const NavigationBar = ({ user, onLogout, onSearch, searchQuery }) => {
                       {user ? (
                       <button onClick={onLogout} className="font-semibold text-sm">Logout</button>
                     ) : (
-                      <Link to="/login" className="font-semibold text-sm">Login</Link>
+                      <NavLink to="/login" className="font-semibold text-sm">Login</NavLink>
                     )}
                     {/* <div className="relative">
                       <p className="pt-1 pr-1 pb-1 pl-1 bg-white text-gray-700 rounded-full transition-all duration-200

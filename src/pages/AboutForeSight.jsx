@@ -11,3 +11,7 @@ const AboutForeSightPage = () => {
 };
 
 export default AboutForeSightPage;
+
+
+// When you want to use the AboutForeSightPage component and pass a custom description, you can do it like this:
+<AboutForeSightPage description="ForeSight offers advanced predictive analytics to empower your decisions." />

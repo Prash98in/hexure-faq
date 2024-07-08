@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ArticleList from '../components/ArticlesList';
+import nlp from 'compromise';
 
 const ArticlesListPage = ({ searchQuery }) => {
   const itemsPerPage = 8;
@@ -8,19 +9,60 @@ const ArticlesListPage = ({ searchQuery }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  var people;
+  // const serverAddress = "http://localhost:8000";
+  const serverAddress = 'http://pjha:8000/api/articles';
+  //const someParam = 'tell me about winflex';
+  const nlpData = () => {
+    let doc = nlp(searchQuery);
+    console.log("NLP doc: ", doc);
+    // Example: find people's names
+    people = (doc.nouns() && !doc.adjectives()).out('array');
+    console.log('People:', doc, people);
+    
+    //return people;
+    // Add more NLP processing as needed
+  };
+  // var testDoc;
+  // //hey this is a try to figure out what NLP could perform
+  // const nlpDataDemo = () => {
+  //   testDoc = nlp(someParam);
+  //   console.log("NLP test doc: ", testDoc);
+  //   // Example: find people's names
+  //   let people = testDoc.verbs().out('array');
+  //   console.log('People verbs:', people);
+  //   return people;
+  //   // Add more NLP processing as needed
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
 
-        const url = 'http://localhost:8000/api/articles';
+        const url = `${serverAddress}`;
         const response = await axios.get(url);
 
-        const filteredData = response.data.filter(item =>
-          item.title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        // const filteredData = response.data.filter(item =>
+        //   item.title.toLowerCase().includes(searchQuery.toLowerCase())
+        // );
 
+        // const nlpData = () => {
+        //   let doc = nlp(searchQuery);
+        //   console.log("NLP doc: ", doc);
+        //   // Example: find people's names
+        //   let people = doc.all().out('array');
+        //   console.log('People:', people);
+        //   return people;
+        //   // Add more NLP processing as needed
+        // };
+        nlpData;
+        console.log('People:', people);
+        const filteredData = response.data.filter(item =>
+          item.title.toLowerCase().includes(people.negate().text())
+        );
+console.log(filteredData.negate().text());
+        //nlpDataDemo('This is a test string to see if NLP can find people in this string.');
         setSearchResults(filteredData);
         setError(null);
       } catch (error) {

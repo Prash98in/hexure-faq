@@ -11,8 +11,8 @@ const ArticlePage = () => {
         // Function to fetch article data
         const fetchArticle = async () => {
             try {
-                const response = await fetch(`http://pjha:8000/api/articles/${articleId}`);
-                
+                const response = await fetch(`http://pjha:8000/api/articles/${articleId}`);   
+                             
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }

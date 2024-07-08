@@ -1,17 +1,22 @@
 // Login.js
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import logo from '../assets/Hexure.jpg'; // make sure the path to the image is correct
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // const serverAddress = "http://localhost:8000";
+  //const serverAddress = "http://pjha";
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       // Simulate an API request
-      const response = await fetch('http://pjha:8000/api/login', {
-        method: 'POST',
+      //const response = await fetch(serverAddress+`:8182//api/login`, {
+        const response = await fetch('http://pjha:8000/api/login', {
+          method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -33,7 +38,8 @@ const Login = ({ onLogin }) => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Login</h2>
+          <img src={logo} alt="Logo" className="mx-auto h-12 w-auto" /> {/* Logo added here */}
+          
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="rounded-md shadow-sm -space-y-px">

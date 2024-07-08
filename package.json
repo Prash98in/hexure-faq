@@ -15,6 +15,7 @@
     "@material-tailwind/html": "^2.2.2",
     "@material-tailwind/react": "^2.1.9",
     "axios": "^1.6.7",
+    "compromise": "^14.13.0",
     "d": "^1.0.1",
     "highlight.js": "^11.9.0",
     "quill-better-table": "^1.2.10",

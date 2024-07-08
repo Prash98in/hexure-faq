@@ -1,0 +1,20 @@
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  @keyframes blink-caret {
+    50% { border-color: transparent; }
+  }
+  
+  .user-card {
+  /* Other styles */
+  border-right: none; /* Remove or adjust this line */
+}
+
+  .typing-effect {
+    border-right: .15em solid black;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blink-caret .75s step-end infinite;
+  }
